@@ -8,6 +8,7 @@ import {
   Card,
   Container
 } from "semantic-ui-react";
+import { DataService } from "../services/data-service";
 
 const extra = (
   <a>
@@ -16,6 +17,39 @@ const extra = (
 );
 
 export default class MyTeachers extends Component {
+  data = new DataService();
+  state = {
+    data: []
+  };
+  teachers = [];
+  constructor(props) {
+    super(props);
+    this.updateInfo();
+  }
+  updateInfo() {
+    this.data
+      .getMyTeachers()
+      .then(res => {
+        this.teachers = res.map(n => {
+          return (
+            <Card
+              image={n.image}
+              header={n.name}
+              meta={n.location}
+              description={n.description}
+              extra={
+                <a>
+                  <Icon name="book" /> {n.coursesCount} {"курса "}
+                </a>
+              }
+            />
+          );
+        });
+      })
+      .then(res => {
+        this.setState({});
+      });
+  }
   render() {
     return (
       <div>
@@ -26,13 +60,7 @@ export default class MyTeachers extends Component {
           <i class="angle down red icon"></i>
         </h4>
         <Container textAlign="center">
-          <Card
-            image="https://react.semantic-ui.com/images/avatar/large/elliot.jpg"
-            header="Иван Иванов"
-            meta="Уфа"
-            description="Заслуженный деятетль искусств республики Дагестан, трижды судим, депутат городского совета города Мелеуз"
-            extra={extra}
-          />
+          <Card.Group textAlign="center">{this.teachers}</Card.Group>
         </Container>
       </div>
     );

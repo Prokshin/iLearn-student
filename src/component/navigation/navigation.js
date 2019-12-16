@@ -40,7 +40,7 @@ export default class Navigation extends Component {
               color="teal"
             />
           </Link>
-          <Link to="/request">
+          <Link to="/all-courses">
             <Menu.Item
               name="Другие курсы"
               active={activeItem === "Другие курсы"}
