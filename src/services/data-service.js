@@ -40,7 +40,18 @@ const studentsTabel = [
     ]
   }
 ];
-
+const StudentById = {
+  id: 2,
+  firstName: "Rail1",
+  lastName: "Sham1",
+  login: "Rail.Ss1",
+  password: "pass1",
+  email: "rail@mail.ru1",
+  birthDate: null,
+  role: "TEACHER",
+  memo:
+    "Я живу и работаю в Уфе <br> <a href=''>mysite.com</a> <br> <a href=''>vk.com/bb_king</a> "
+};
 const subjects = [
   {
     name: "ООП"
@@ -130,12 +141,78 @@ const courseDetail = [
   }
 ];
 
+///
+const gcourse = {
+  courses: [
+    {
+      id: 1,
+      name: "Course A",
+      level: "Beginner",
+      description: "A description",
+      _teacher: "Ivanov Ivan",
+      _progress: 60
+    }
+  ]
+};
+
+const gThemes = {
+  themes: [
+    {
+      id: 1,
+      name: "Theme A1"
+    },
+    {
+      id: 2,
+      name: "Theme A2"
+    },
+    {
+      id: 3,
+      name: "Theme A3"
+    }
+  ],
+  statuses: {
+    "1": true,
+    "2": false,
+    "3": false
+  }
+};
+
+const gTasks = {
+  tests: [
+    {
+      id: 1,
+      name: "Test A11"
+    }
+  ],
+  lectures: [
+    {
+      id: 1,
+      name: "Lecture A11",
+      description: "Aecription A11",
+      content: "Aontent A11"
+    },
+    {
+      id: 2,
+      name: "Lecture A12",
+      description: "Aecription A12",
+      content: "Aontent A12"
+    },
+    {
+      id: 3,
+      name: "Lecture A12",
+      description: "Aecription A13",
+      content: "Aontent A13"
+    }
+  ],
+  statuses: {
+    "t-status": [1],
+    "l-status": [1]
+  }
+};
+///
 export class DataService {
   async getUserInfo() {
     return userInfo;
-  }
-  async getMyCourses() {
-    return myCourses;
   }
   async getMyTeachers() {
     return myTeacher;
@@ -148,5 +225,21 @@ export class DataService {
   }
   async getCourseTexById(id = 0, id2 = 0) {
     return courseDetail[id].topics[id2].text;
+  }
+
+  async _getMyCourses() {
+    return gcourse;
+  }
+
+  async getStudent(id) {
+    return StudentById;
+  }
+
+  async getThemes(id) {
+    return gThemes;
+  }
+
+  async getTasks() {
+    return gTasks;
   }
 }

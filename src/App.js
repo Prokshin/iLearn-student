@@ -12,7 +12,7 @@ import { TestsPage } from "./pages/tests";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/student">
       <div className="App">
         <Grid>
           <Navigation />

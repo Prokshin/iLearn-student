@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, Route, Switch, matchPath } from "react-router-dom";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
 import {
   Header,
   Icon,
@@ -10,13 +10,15 @@ import {
   Container
 } from "semantic-ui-react";
 import { DataService } from "../services/data-service";
-import { Course } from "./course";
-import Divisions from "./divisions";
 
-export default class MyCourses extends Component {
+import Theme from "../component/theme/theme";
+
+class Division extends Component {
   data = new DataService();
   state = {
-    data: []
+    data: [],
+    courses: "",
+    coure_id: this.props.match.params.id
   };
   courses = [];
   constructor(props) {
@@ -26,71 +28,72 @@ export default class MyCourses extends Component {
 
   updateInfo() {
     this.data
-      ._getMyCourses()
+      .getThemes()
       .then(res => {
-        this.courses = res.courses.map(n => {
-          let pd = "В процессе";
-          switch (n.progress) {
-            case 0:
-              pd = "Не приступал";
+        this.setState({
+          status: "load"
+        });
+        const status = res.statuses;
+        this.courses = res.themes.map(n => {
+          let pd = "ban";
+          let cl = "red";
+          switch (status[n.id]) {
+            case false:
+              pd = "close";
+
               break;
-            case 100:
-              pd = "Завершено";
+            case true:
+              pd = "checkmark";
+              cl = "green";
               break;
           }
 
           return (
             <Table.Row key={n.id}>
               <Table.Cell>
-                <Link to={`/my-courses/${n.id}`}>{n.name}</Link>
+                <Link to={`${document.location.pathname.slice(8)}/${n.id}`}>
+                  {n.name}
+                </Link>
               </Table.Cell>
-              <Table.Cell>{n._teacher}</Table.Cell>
-              <Table.Cell>
-                <Progress
-                  percent={n._progress}
-                  progress
-                  indicating
-                  label={pd}
-                />
+
+              <Table.Cell width="1" textAlign="center">
+                <Icon name={pd} color={cl} />
               </Table.Cell>
             </Table.Row>
           );
         });
       })
-      .then(res => {
-        console.log(res);
+      .then(() => {
         this.setState({
-          data: res
+          courses: this.courses
         });
-        return res;
       });
   }
   render() {
-    console.log(this.courses);
-    console.log(matchPath);
+    console.log(this.props.match);
     return (
       <div>
         <Header as="h1" color={"red"} textAlign="center">
-          Мои курсы
+          Темы
         </Header>
         <h4 class="ui horizontal divider">
           <i class="angle down red icon"></i>
         </h4>
         <Switch>
-          <Route path="/my-courses/:id">
-            <Divisions />
+          <Route path={`${this.props.match.url}/:id`}>
+            <Theme course_id={this.state.coure_id} />
           </Route>
-          <Route path="/my-courses">
-            <Table celled size="large">
+          <Route path={this.props.match.url}>
+            <Table celled size="large" st={this.state.status}>
               <Table.Header>
                 <Table.Row>
-                  <Table.HeaderCell>Курс</Table.HeaderCell>
-                  <Table.HeaderCell>Преподаватель</Table.HeaderCell>
-                  <Table.HeaderCell>Прогресс</Table.HeaderCell>
+                  <Table.HeaderCell>Тема</Table.HeaderCell>
+
+                  <Table.HeaderCell>Статус</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
 
-              <Table.Body>{this.courses}</Table.Body>
+              <Table.Body st={this.state.status}>{this.courses}</Table.Body>
 
               <Table.Footer>
                 <Table.Row>
@@ -107,3 +110,7 @@ export default class MyCourses extends Component {
     );
   }
 }
+
+const Divisions = withRouter(Division);
+
+export default Divisions;
