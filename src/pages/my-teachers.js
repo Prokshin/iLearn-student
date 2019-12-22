@@ -8,15 +8,11 @@ import {
   Card,
   Container
 } from "semantic-ui-react";
+
 import { DataService } from "../services/data-service";
-
-const extra = (
-  <a>
-    <Icon name="book" />2 Курса
-  </a>
-);
-
-export default class MyTeachers extends Component {
+import { Link, withRouter, Route, Switch } from "react-router-dom";
+import Tcourse from "../component/t-course/t-course";
+class MyTeachers extends Component {
   data = new DataService();
   state = {
     data: []
@@ -33,14 +29,12 @@ export default class MyTeachers extends Component {
         this.teachers = res.map(n => {
           return (
             <Card
-              image={n.image}
               header={n.name}
-              meta={n.location}
               description={n.description}
               extra={
-                <a>
+                <Link to={`${this.props.match.path}/${n.id}`}>
                   <Icon name="book" /> {n.coursesCount} {"курса "}
-                </a>
+                </Link>
               }
             />
           );
@@ -59,10 +53,18 @@ export default class MyTeachers extends Component {
         <h4 class="ui horizontal divider">
           <i class="angle down red icon"></i>
         </h4>
-        <Container textAlign="center">
-          <Card.Group textAlign="center">{this.teachers}</Card.Group>
-        </Container>
+        <Switch>
+          <Route path={`${this.props.match.url}/:id`}>
+            <Tcourse />
+          </Route>
+          <Route path={this.props.match.url}>
+            <Card.Group textAlign="center">{this.teachers}</Card.Group>
+          </Route>
+        </Switch>
       </div>
     );
   }
 }
+
+const T = withRouter(MyTeachers);
+export default T;

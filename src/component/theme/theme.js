@@ -10,6 +10,7 @@ import {
   Container
 } from "semantic-ui-react";
 import { DataService } from "../../services/data-service";
+import Lecture from "../lecture/lecture";
 
 class _Tasks extends Component {
   data = new DataService();
@@ -27,7 +28,7 @@ class _Tasks extends Component {
 
   updateInfo() {
     this.data
-      .getTasks()
+      .getTasks(this.props.match.params.id)
       .then(res => {
         const status = res.statuses;
 
@@ -93,7 +94,9 @@ class _Tasks extends Component {
           <i class="angle down red icon"></i>
         </h4>
         <Switch>
-          <Route path={`${document.location.pathname.slice(8)}/:id`}>gg</Route>
+          <Route path={`${this.props.match.url}/:id`}>
+            <Lecture />
+          </Route>
           <Route path="/:id">
             <Table celled size="large">
               <Table.Header>

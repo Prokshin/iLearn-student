@@ -85,19 +85,12 @@ const myCourses = [
 
 const myTeacher = [
   {
-    name: "Иван Иванов",
-    location: "Уфа, Угату",
+    id: 1,
+    name: "Ivanov Ivan",
+
     description:
       "Заслуженный деятетль искусств республики Дагестан, трижды судим, депутат городского совета Верхнего Волочка",
-    coursesCount: 2,
-    image: "https://react.semantic-ui.com/images/avatar/large/elliot.jpg"
-  },
-  {
-    name: "Ержан Ержанов",
-    location: "Белебей",
-    description: "Смог проснуться в 12 утра",
-    coursesCount: 222,
-    image: "https://react.semantic-ui.com/images/avatar/large/elliot.jpg"
+    coursesCount: 3
   }
 ];
 
@@ -177,37 +170,141 @@ const gThemes = {
   }
 };
 
-const gTasks = {
-  tests: [
-    {
-      id: 1,
-      name: "Test A11"
+const gTasks = [
+  {
+    tests: [
+      {
+        id: 1,
+        name: "Test A11"
+      }
+    ],
+    lectures: [
+      {
+        id: 1,
+        name: "Lecture A11",
+        description: "Aecription A11",
+        content: "Aontent A11"
+      },
+      {
+        id: 2,
+        name: "Lecture A12",
+        description: "Aecription A12",
+        content: "Aontent A12"
+      },
+      {
+        id: 3,
+        name: "Lecture A12",
+        description: "Aecription A13",
+        content: "Aontent A13"
+      }
+    ],
+    statuses: {
+      "t-status": [1],
+      "l-status": [1]
     }
-  ],
-  lectures: [
+  }
+];
+
+const lecture = {
+  id: 1,
+  name: "Lecture name 1",
+  content: {
+    text: "<p>some text width <strong>HTML</strong></p>"
+  }
+};
+
+const allCourse = {
+  courses: [
     {
       id: 1,
-      name: "Lecture A11",
-      description: "Aecription A11",
-      content: "Aontent A11"
+      name: "Course A",
+      level: "Beginner",
+      description: "A description"
     },
     {
       id: 2,
-      name: "Lecture A12",
-      description: "Aecription A12",
-      content: "Aontent A12"
+      name: "Course B",
+      level: "Beginner",
+      description: "B description"
     },
     {
       id: 3,
-      name: "Lecture A12",
-      description: "Aecription A13",
-      content: "Aontent A13"
+      name: "Course C",
+      level: "Beginner",
+      description: "C description"
+    },
+    {
+      id: 4,
+      name: "Course D",
+      level: "Intermediate",
+      description: "D description"
+    },
+    {
+      id: 5,
+      name: "Course E",
+      level: "Intermediate",
+      description: "E description"
+    },
+    {
+      id: 6,
+      name: "Course F",
+      level: "Intermediate",
+      description: "F description"
+    },
+    {
+      id: 7,
+      name: "Course G",
+      level: "Advanced",
+      description: "G description"
+    },
+    {
+      id: 8,
+      name: "Course H",
+      level: "Advanced",
+      description: "H description"
+    },
+    {
+      id: 9,
+      name: "Course J",
+      level: "Advanced",
+      description: "J description"
+    },
+    {
+      id: 10,
+      name: "My course",
+      level: "Beginner",
+      description: "my course!"
     }
-  ],
-  statuses: {
-    "t-status": [1],
-    "l-status": [1]
-  }
+  ]
+};
+
+const teacherCourse = {
+  courses: [
+    {
+      id: 3,
+      name: "Course C",
+      level: "Beginner",
+      description: "C description"
+    },
+    {
+      id: 1,
+      name: "Course A",
+      level: "Beginner",
+      description: "A description"
+    },
+    {
+      id: 10,
+      name: "My course",
+      level: "Beginner",
+      description: "my course!"
+    },
+    {
+      id: 2,
+      name: "Course B",
+      level: "Beginner",
+      description: "B description"
+    }
+  ]
 };
 ///
 export class DataService {
@@ -239,7 +336,16 @@ export class DataService {
     return gThemes;
   }
 
-  async getTasks() {
-    return gTasks;
+  async getTasks(id) {
+    return gTasks[id - 1];
+  }
+  async getLecture() {
+    return lecture;
+  }
+  async getAllCourse() {
+    return allCourse;
+  }
+  async getCourseByTeacher(id) {
+    return teacherCourse;
   }
 }

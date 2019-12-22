@@ -8,75 +8,53 @@ import {
   Card,
   Container
 } from "semantic-ui-react";
-
-const courses = () => {
-  let arr = [];
-  arr.push(
-    <Card color="red">
-      <Card.Content>
-        <Card.Header>
-          <Header as="h2" color="teal">
-            Базы данных
-          </Header>
-        </Card.Header>
-        <Card.Meta>базовый курс</Card.Meta>
-        <Card.Description>
-          Научись делать сложные запросы и вызывать дьявола
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra textAlign="center">
-        <Button color="teal" disabled>
-          Добавить
-        </Button>
-      </Card.Content>
-    </Card>
-  );
-  for (let i = 0; i < 69; i++) {
-    arr.push(
-      <Card color="red">
-        <Card.Content>
-          <Card.Header>
-            <Header as="h2" color="teal">
-              ООП
-            </Header>
-          </Card.Header>
-          <Card.Meta>Уровень {i + 1}</Card.Meta>
-          <Card.Description>
-            - Скажи мне три главных слова... -Наследование... Инкапсуляция...
-            Полиморфизм
-          </Card.Description>
-        </Card.Content>
-        <Card.Content extra textAlign="center">
-          <Button color="teal">Добавить</Button>
-        </Card.Content>
-      </Card>
-    );
-  }
-  arr.push(
-    <Card color="red">
-      <Card.Content>
-        <Card.Header>
-          <Header as="h2" color="teal">
-            ООП
-          </Header>
-        </Card.Header>
-        <Card.Meta>пишем первую программу</Card.Meta>
-        <Card.Description>Вот вы вошли в компизицую с гробами</Card.Description>
-      </Card.Content>
-      <Card.Content extra textAlign="center">
-        <Button color="teal" disabled>
-          Добавить
-        </Button>
-      </Card.Content>
-    </Card>
-  );
-
-  return arr;
-};
+import { DataService } from "../services/data-service";
 
 export default class AllCourses extends Component {
+  data = new DataService();
+  el = "";
+  constructor(props) {
+    super(props);
+    this.state = {
+      d: null
+    };
+    this.update();
+  }
+  AddCourse = id => {
+    alert("Пошёл запрос на добавление курса под номером " + id);
+  };
+  update = () => {
+    this.data
+      .getAllCourse()
+      .then(res => {
+        this.el = res.courses.map(n => {
+          return (
+            <Card color="red" key={n.id}>
+              <Card.Content>
+                <Card.Header>
+                  <Header as="h2" color="teal">
+                    {n.name}
+                  </Header>
+                </Card.Header>
+                <Card.Meta>{n.level}</Card.Meta>
+                <Card.Description>{n.description}</Card.Description>
+              </Card.Content>
+              <Card.Content extra textAlign="center">
+                <Button onClick={() => this.AddCourse(n.id)} color="teal">
+                  Добавить
+                </Button>
+              </Card.Content>
+            </Card>
+          );
+        });
+      })
+      .then(res => {
+        this.setState({
+          d: this.el
+        });
+      });
+  };
   render() {
-    console.log(courses);
     return (
       <div>
         <Header as="h1" color={"red"} textAlign="center">
@@ -86,7 +64,26 @@ export default class AllCourses extends Component {
           <i class="angle down red icon"></i>
         </h4>
 
-        <Card.Group textAlign="center">{courses()}</Card.Group>
+        <Card.Group textAlign="center">
+          {" "}
+          {this.el}
+          <Card color="red">
+            <Card.Content>
+              <Card.Header>
+                <Header as="h2" color="teal">
+                  ООП
+                </Header>
+              </Card.Header>
+              <Card.Meta>пишем первую программу</Card.Meta>
+              <Card.Description>
+                Вот вы вошли в компизицую с гробами
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra textAlign="center">
+              <Button color="teal">Добавить</Button>
+            </Card.Content>
+          </Card>
+        </Card.Group>
       </div>
     );
   }
