@@ -368,8 +368,10 @@ export class DataService {
     const res = await this.getRes(`http://localhost:8080/student/${id}${url}`);
     return res;
   }
-  async getAllCourse() {
-    const res = await this.getRes(`http://localhost:8080/student/courses`);
+  async getAllCourse(id) {
+    const res = await this.getRes(
+      `http://localhost:8080/student/${id}/courses`
+    );
     return res;
   }
   async getCourseByTeacher(id) {
@@ -377,7 +379,7 @@ export class DataService {
   }
   async getComment() {
     const res = await this.getRes(
-      `http://localhost:8080/student/1/my-courses/Course1/Theme1/lecture/38/exercise/5/comment`
+      `http://localhost:8080/student/1/my-courses/OOP/inheritance/lecture/1/exercise/1/comment`
     );
     return res;
   }

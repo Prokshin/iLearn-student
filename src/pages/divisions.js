@@ -33,12 +33,12 @@ class Division extends Component {
         this.setState({
           status: "load"
         });
-        const status = res.statuses;
+        const status = res.themes.status;
         this.courses = res.themes.map(n => {
           let pd = "ban";
           let cl = "red";
-          switch (status[n.id]) {
-            case false:
+          switch (n.status) {
+            case "IN PROGRESS":
               pd = "close";
 
               break;

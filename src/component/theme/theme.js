@@ -35,37 +35,13 @@ class _Tasks extends Component {
         this.lectures = res.lectures.map(n => {
           let ic = "close";
           let c = "red";
-          if (status["l-status"].find(r => r === n.id) !== undefined) {
-            ic = "checkmark";
-            c = "green";
-          }
+
           return (
             <Table.Row key={n.id}>
               <Table.Cell>
                 <Link
                   to={`${document.location.pathname.slice(8)}/lecture/${n.id}`}
                 >
-                  {n.name}
-                </Link>
-              </Table.Cell>
-
-              <Table.Cell width="1" textAlign="center">
-                <Icon name={ic} color={c} />
-              </Table.Cell>
-            </Table.Row>
-          );
-        });
-        this.tests = res.tests.map(n => {
-          let ic = "close";
-          let c = "red";
-          if (status["l-status"].find(r => r === n.id) !== undefined) {
-            ic = "checkmark";
-            c = "green";
-          }
-          return (
-            <Table.Row key={n.id}>
-              <Table.Cell>
-                <Link to={`${document.location.pathname.slice(8)}/${n.id}`}>
                   {n.name}
                 </Link>
               </Table.Cell>
@@ -114,26 +90,6 @@ class _Tasks extends Component {
               </Table.Header>
 
               <Table.Body>{this.lectures}</Table.Body>
-
-              <Table.Footer>
-                <Table.Row>
-                  <Table.HeaderCell colSpan="3"></Table.HeaderCell>
-                </Table.Row>
-              </Table.Footer>
-            </Table>
-            <Table celled size="large">
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell>
-                    <Icon name="tasks" />
-                    Тесты
-                  </Table.HeaderCell>
-
-                  <Table.HeaderCell>Статус</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-
-              <Table.Body>{this.tests}</Table.Body>
 
               <Table.Footer>
                 <Table.Row>

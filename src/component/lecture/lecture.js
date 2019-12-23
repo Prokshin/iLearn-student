@@ -26,9 +26,9 @@ class _Lecture extends Component {
     this.data.getLecture(1, this.props.match.url).then(res => {
       console.log(res);
       this.setState({
-        id: res.lecture.id,
-        name: res.lecture.name,
-        content: res.lecture.content,
+        id: res.id,
+        name: res.name,
+        content: res.content,
         onLoad: true,
         ex_id: res?.exercises[0]?.id,
         ex_name: res?.exercises[0]?.name,
@@ -45,7 +45,7 @@ class _Lecture extends Component {
     return { __html: this.state.content };
   }
   render() {
-    console.log(this.props.match);
+    console.log(this.state.ex_id);
     if (this.state.onLoad) {
       this.content = (
         <div>
@@ -53,12 +53,10 @@ class _Lecture extends Component {
           <Divider hidden></Divider>
           <div dangerouslySetInnerHTML={this.createMarkup()} />
           <Segment>
-            <Header>{this.state.ex_name}</Header>
-            <p> {this.state.ex_desciption}</p>
             <Ex
-              name="Написать первую программу"
-              id="1"
-              description="В комментарии отправить ссылку на скачивание исходного код"
+              name={this.state.ex_name}
+              id={this.state.ex_id}
+              description={this.state.ex_desciption}
             />
           </Segment>
         </div>
