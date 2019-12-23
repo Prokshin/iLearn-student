@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { DataService } from "../../services/data-service";
 import { withRouter } from "react-router-dom";
 import { Header, Divider, Segment, Button } from "semantic-ui-react";
+import Ex from "../ex/ex";
 
 class _Lecture extends Component {
   data = new DataService();
@@ -54,28 +55,11 @@ class _Lecture extends Component {
           <Segment>
             <Header>{this.state.ex_name}</Header>
             <p> {this.state.ex_desciption}</p>
-
-            <form
-              className="ui form"
-              action=""
-              enctype="multipart/form-data"
-              method="post"
-            >
-              <div className="field">
-                <p>Загрузите файл с ответами и преподаватель их проверит </p>
-                <div className="ui left icon input">
-                  <input type="file" name="file" />
-                  <i class="file icon"></i>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <button className="ui animated button basic teal fluid">
-                    отправить файл
-                  </button>
-                </div>
-              </div>
-            </form>
+            <Ex
+              name="Написать первую программу"
+              id="1"
+              description="В комментарии отправить ссылку на скачивание исходного код"
+            />
           </Segment>
         </div>
       );
