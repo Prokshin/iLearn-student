@@ -42,7 +42,7 @@ export default class MyCourses extends Component {
           return (
             <Table.Row key={n.id}>
               <Table.Cell>
-                <Link to={`/my-courses/${n.id}`}>{n.name}</Link>
+                <Link to={`/my-courses/${n.name}`}>{n.name}</Link>
               </Table.Cell>
               <Table.Cell>{n._teacher}</Table.Cell>
               <Table.Cell>

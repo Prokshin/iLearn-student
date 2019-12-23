@@ -308,6 +308,22 @@ const teacherCourse = {
 };
 ///
 export class DataService {
+  async getRes(url) {
+    const res = await fetch(url);
+
+    //console.log(await res.json());
+    return await res.json();
+  }
+  async postRes(url, data) {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+  }
+
   async getUserInfo() {
     return userInfo;
   }
@@ -324,28 +340,52 @@ export class DataService {
     return courseDetail[id].topics[id2].text;
   }
 
-  async _getMyCourses() {
-    return gcourse;
+  async _getMyCourses(id) {
+    const res = await this.getRes("http://localhost:8080/student/1/my-courses");
+    return res;
   }
 
   async getStudent(id) {
-    return StudentById;
+    const res = await this.getRes(`http://localhost:8080/student/${id}`);
+    return res;
   }
 
-  async getThemes(id) {
-    return gThemes;
+  async getThemes(id, course_id) {
+    const res = await this.getRes(
+      `http://localhost:8080/student/${id}/my-courses/${course_id}/`
+    );
+    return res;
   }
 
-  async getTasks(id) {
-    return gTasks[id - 1];
+  async getTasks(id, courseName, themeName) {
+    const res = await this.getRes(
+      `http://localhost:8080/student/${id}${courseName}`
+    );
+    return res;
   }
-  async getLecture() {
-    return lecture;
+  async getLecture(id, url) {
+    console.log(id, url);
+    const res = await this.getRes(`http://localhost:8080/student/${id}${url}`);
+    return res;
   }
   async getAllCourse() {
-    return allCourse;
+    const res = await this.getRes(`http://localhost:8080/student/courses`);
+    return res;
   }
   async getCourseByTeacher(id) {
     return teacherCourse;
+  }
+  async getComment() {
+    const res = await this.getRes(
+      `http://localhost:8080/student/1/my-courses/Course1/Theme1/lecture/38/exercise/5/comment`
+    );
+    return res;
+  }
+  async addCourseById(id, course_id) {
+    const res = await this.postRes(
+      `http://localhost:8080/student/${id}/courses/${course_id}`,
+      {}
+    );
+    return res;
   }
 }

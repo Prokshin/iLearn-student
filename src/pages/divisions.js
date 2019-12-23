@@ -28,7 +28,7 @@ class Division extends Component {
 
   updateInfo() {
     this.data
-      .getThemes()
+      .getThemes(1, this.props.match.params.id)
       .then(res => {
         this.setState({
           status: "load"
@@ -51,7 +51,7 @@ class Division extends Component {
           return (
             <Table.Row key={n.id}>
               <Table.Cell>
-                <Link to={`${document.location.pathname.slice(8)}/${n.id}`}>
+                <Link to={`${document.location.pathname.slice(8)}/${n.name}`}>
                   {n.name}
                 </Link>
               </Table.Cell>

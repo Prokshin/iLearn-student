@@ -20,12 +20,13 @@ export default class AllCourses extends Component {
     };
     this.update();
   }
-  AddCourse = id => {
-    alert("Пошёл запрос на добавление курса под номером " + id);
+  AddCourse = id_course => {
+    alert("Пошёл запрос на добавление курса под номером " + id_course);
+    this.data.addCourseById(1, id_course);
   };
   update = () => {
     this.data
-      .getAllCourse()
+      .getAllCourse(1)
       .then(res => {
         this.el = res.courses.map(n => {
           return (
@@ -54,6 +55,7 @@ export default class AllCourses extends Component {
         });
       });
   };
+
   render() {
     return (
       <div>

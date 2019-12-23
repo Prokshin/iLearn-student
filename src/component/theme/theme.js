@@ -28,7 +28,7 @@ class _Tasks extends Component {
 
   updateInfo() {
     this.data
-      .getTasks(this.props.match.params.id)
+      .getTasks(1, this.props.match.url)
       .then(res => {
         const status = res.statuses;
 
@@ -42,7 +42,9 @@ class _Tasks extends Component {
           return (
             <Table.Row key={n.id}>
               <Table.Cell>
-                <Link to={`${document.location.pathname.slice(8)}/${n.id}`}>
+                <Link
+                  to={`${document.location.pathname.slice(8)}/lecture/${n.id}`}
+                >
                   {n.name}
                 </Link>
               </Table.Cell>
@@ -84,7 +86,7 @@ class _Tasks extends Component {
       });
   }
   render() {
-    console.log(this.courses);
+    console.log(this.props.match);
     return (
       <div>
         <Header as="h1" color={"red"} textAlign="center">
@@ -94,7 +96,7 @@ class _Tasks extends Component {
           <i class="angle down red icon"></i>
         </h4>
         <Switch>
-          <Route path={`${this.props.match.url}/:id`}>
+          <Route path={`${this.props.match.url}/lecture/:id`}>
             <Lecture />
           </Route>
           <Route path="/:id">

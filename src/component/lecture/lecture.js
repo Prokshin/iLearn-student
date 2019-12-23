@@ -10,27 +10,41 @@ class _Lecture extends Component {
     name: null,
     content: null,
     onLoad: false,
-    theme_id: this.props.match.params.id
+    theme_id: this.props.match.params.id,
+    ex_id: null,
+    ex_name: null,
+    ex_desciption: null
   };
   content = "";
   constructor(props) {
     super(props);
     this.update();
+    this.updateComments();
   }
   update = () => {
-    this.data.getLecture().then(res => {
+    this.data.getLecture(1, this.props.match.url).then(res => {
+      console.log(res);
       this.setState({
-        id: res.id,
-        name: res.name,
-        content: res.content,
-        onLoad: true
+        id: res.lecture.id,
+        name: res.lecture.name,
+        content: res.lecture.content,
+        onLoad: true,
+        ex_id: res?.exercises[0]?.id,
+        ex_name: res?.exercises[0]?.name,
+        ex_desciption: res?.exercises[0]?.description
       });
     });
   };
+  updateComments = () => {
+    this.data.getComment().then(res => {
+      console.log(res);
+    });
+  };
   createMarkup() {
-    return { __html: this.state.content.text };
+    return { __html: this.state.content };
   }
   render() {
+    console.log(this.props.match);
     if (this.state.onLoad) {
       this.content = (
         <div>
@@ -38,9 +52,9 @@ class _Lecture extends Component {
           <Divider hidden></Divider>
           <div dangerouslySetInnerHTML={this.createMarkup()} />
           <Segment>
-            <Header>Практика</Header>
-            <p>1. Какое - нибудь практическое задание </p>
-            <p>2 .Ещё одно какое - нибудь практическое задание</p>
+            <Header>{this.state.ex_name}</Header>
+            <p> {this.state.ex_desciption}</p>
+
             <form
               className="ui form"
               action=""
